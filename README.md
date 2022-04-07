@@ -152,4 +152,4 @@ docker pull ubuntu/nginx
 ```
 docker images
 ```
-![alt docker_pull](MarkDownPic/docker_images.png)
+![alt docker_images](MarkDownPic/docker_images.png)
