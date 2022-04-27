@@ -57,6 +57,7 @@ ___ __
 
 > 最外层
 > > 第一层嵌套
+> >
 > > > 第二层嵌套
 
 > 区块中使用列表
@@ -134,27 +135,68 @@ Note right of C: 没人陪我玩
 ```
 
 # docker
-> 1.检查docker程序运行状态
+1. 检查docker程序运行状态
 ```
 docker info
 ```
-> 2.查找Docker Hub公共可用镜像
+
+2. 查找Docker Hub公共可用镜像
 ```
-docker search nginx
+docker search ubuntu
 ```
-![alt docker_search](MarkDownPic/docker_search.png)
-> 3.从Docker Hub拉取镜像
+![alt docker_search_ubuntu](./pictures/docker_search_ubuntu.png)
+
+3. 从Docker Hub拉取镜像
 ```
-docker pull ubuntu/nginx
+docker pull ubuntu
 ```
-![alt docker_pull](MarkDownPic/docker_pull.png)
-> 4.列出docker主机本地镜像
+![alt docker_pull_ubuntu](./pictures/docker_pull_ubuntu.png)
+
+4. 列出docker主机本地镜像
 ```
 docker images
 ```
-![alt docker_images](MarkDownPic/docker_images.png)
+![alt docker_images](./pictures/docker_images.png)
 
-# Linux安装MySQL指引
+5. 删除本地镜像
+```
+docker image rm 33345394c4b7
+```
+![alt docker_image_rm_nginx](./pictures/docker_image_rm_nginx.png)
+
+6. 新建容器
+- 新建容器并启动
+```
+docker run --name ubuntu_test_env -i -t ubuntu /bin/bash
+```
+![alt docker_run_ubuntu](./pictures/docker_run_ubuntu.png)
+我们可以在容器内做自己想做的任何事情了。当输入exit后，会返回到宿主机的命令提示符，这时候，容器就已经停止运行了，但容器仍在，可以通过下述2个命令来说明：
+```
+docker ps       # 查看当前宿主机正在运行的容器
+docker ps -a    # 查看当前宿主机的容器列表
+```
+![alt docker_ps_a](./pictures/docker_ps_a.png)
+- 重新运行一个终止状态的容器并附着
+```
+docker container start 6c5cea5a64f7
+docker attach ubuntu_test_env   # 附着容器
+```
+![alt docker_container_start_attach](./pictures/docker_container_start_attach.png)
+
+7. 终止容器
+```
+docker container stop ubuntu_test_env
+```
+![alt docker_container_stop](./pictures/docker_container_stop.png)
+用户不仅可以通过exit来退出终止容器，还可以通过docker container stop命令来达到相同的效果
+
+8. 删除容器
+```
+docker container rm ubuntu_test_env
+```
+
+
+# Linux Centos7安装MySQL8指引
 ## 本指引以MySQL Community Server 8.0.28版本为示例说明
 1. 从官网下载 [MySQL Community Server 8.0.28](https://dev.mysql.com/downloads/mysql/)
 ![alt MySQL8](./pictures/mysql8_download.png)
@@ -165,7 +207,7 @@ docker images
 > 数据库保存位置：/data/mysql  
 > 日志保存位置：/data/log/mysql  
 
-把下载好的mysql-8.0.28-linux-glibc2.12-x86_64.tar包上传到服务/data/software目录下
+把下载好的mysql-8.0.28-linux-glibc2.12-x86_64.tar包上传到服务器/data/software目录下
 
 3. 解压压缩包到安装位置  
 ```shell
@@ -300,9 +342,9 @@ service mysql stop
     ```text
     general_log=off
     general-log-file=/data/log/mysql/general.log
-
+    
     log-error=/data/log/mysql/error.log
-
+    
     slow_query_log=on
     slow-query-log-file=/data/log/mysql/slow.log
     ```
@@ -314,4 +356,12 @@ service mysql stop
 show global variables; # 或者
 show global variables where variable_name='xxx';
 ```
-如果要变更值的话，编辑/etc/my.cnf添加相应的配置项即可
+如果要变更值的话，编辑/etc/my.cnf添加相应的配置项即可。常用的优化配置项目有（https://bbs.huaweicloud.com/forum/thread-25203-1-1.html）：
+
+- a
+- b
+
+17. 未完待续
+    - a
+    - b
+
